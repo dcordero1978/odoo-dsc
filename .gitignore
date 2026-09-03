@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+
+# Odoo
+*.pyc
+.~lock.*
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Entornos virtuales (por si acaso, aunque no van aquí)
+venv/
+.venv/
+env/
+
+# Logs
+*.log

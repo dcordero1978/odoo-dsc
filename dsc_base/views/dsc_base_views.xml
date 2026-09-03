@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Vista de lista -->
+    <record id="view_dsc_ejemplo_list" model="ir.ui.view">
+        <field name="name">dsc.ejemplo.list</field>
+        <field name="model">dsc.ejemplo</field>
+        <field name="arch" type="xml">
+            <list string="Ejemplos DSC">
+                <field name="name"/>
+                <field name="descripcion"/>
+                <field name="activo"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Vista de formulario -->
+    <record id="view_dsc_ejemplo_form" model="ir.ui.view">
+        <field name="name">dsc.ejemplo.form</field>
+        <field name="model">dsc.ejemplo</field>
+        <field name="arch" type="xml">
+            <form string="Ejemplo DSC">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="activo"/>
+                    </group>
+                    <group>
+                        <field name="descripcion"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Acción -->
+    <record id="action_dsc_ejemplo" model="ir.actions.act_window">
+        <field name="name">Ejemplos DSC</field>
+        <field name="res_model">dsc.ejemplo</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Menú -->
+    <menuitem id="menu_dsc_root" name="DSC"/>
+    <menuitem id="menu_dsc_ejemplo"
+              name="Ejemplos"
+              parent="menu_dsc_root"
+              action="action_dsc_ejemplo"/>
+
+</odoo>
