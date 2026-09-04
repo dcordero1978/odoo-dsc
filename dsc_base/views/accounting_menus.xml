@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!--
-        Separación de las tarjetas Facturación / Contabilidad.
+        1) Separación de las tarjetas Facturación / Contabilidad.
+        2) Traducción al español de los menús que base_accounting_kit /
+           base_account_budget dejan en inglés.
 
         Odoo Community + base_accounting_kit cuelgan todo bajo una sola tarjeta
         ("Facturación", account.menu_finance). Aquí creamos una tarjeta nueva
@@ -9,8 +11,8 @@
         dejando en "Facturación" solo lo comercial (Clientes, Proveedores, Config).
 
         Mismo motor, mismos flujos: solo cambia la organización de menús.
-        Reversible: al desinstalar dsc_base, los parent_id vuelven a su módulo origen
-        (recomendado: reinstalar/actualizar account + base_accounting_kit).
+        Las traducciones se fijan por el campo name del menú (determinista),
+        NO por catálogo .po, para no interferir con el fetch de traducciones del web.
     -->
 
     <!-- ===== Nueva tarjeta raíz: Contabilidad ===== -->
@@ -21,7 +23,7 @@
 
     <!-- ===== Mover los menús contables a la nueva tarjeta ===== -->
 
-    <!-- "Contabilidad" (Transacciones, Cierre, Budgets, Management, Actions) -->
+    <!-- "Contabilidad" (Transacciones, Cierre, Presupuestos, Gestión, Acciones) -->
     <record id="account.menu_finance_entries" model="ir.ui.menu">
         <field name="parent_id" ref="menu_dsc_accounting_root"/>
     </record>
@@ -36,13 +38,58 @@
         <field name="parent_id" ref="menu_dsc_accounting_root"/>
     </record>
 
+    <!-- ===== Traducir al español los menús del kit (fijando el name) ===== -->
+
+    <!-- Clientes -->
+    <record id="base_accounting_kit.customer_statements_menu" model="ir.ui.menu">
+        <field name="name">Reportes de seguimiento</field>
+    </record>
+    <record id="base_accounting_kit.menu_account_recurring_invoice" model="ir.ui.menu">
+        <field name="name">Facturas recurrentes</field>
+    </record>
+
+    <!-- Proveedores -->
+    <record id="base_accounting_kit.menu_account_bulk_payment" model="ir.ui.menu">
+        <field name="name">Pagos masivos</field>
+    </record>
+
+    <!-- Contabilidad -->
+    <record id="base_account_budget.menu_act_budget_view" model="ir.ui.menu">
+        <field name="name">Presupuestos</field>
+    </record>
+    <record id="base_accounting_kit.management_menu" model="ir.ui.menu">
+        <field name="name">Gestión</field>
+    </record>
+    <record id="base_accounting_kit.actions_menu" model="ir.ui.menu">
+        <field name="name">Acciones</field>
+    </record>
+
+    <!-- Reportes -->
+    <record id="base_accounting_kit.account_reports_generic_statements" model="ir.ui.menu">
+        <field name="name">Estados genéricos</field>
+    </record>
+    <record id="base_accounting_kit.account_reports_daily_reports" model="ir.ui.menu">
+        <field name="name">Reportes diarios</field>
+    </record>
+    <record id="base_accounting_kit.menu_aged_trial_balance" model="ir.ui.menu">
+        <field name="name">Balance de antigüedad de saldos</field>
+    </record>
+    <record id="base_accounting_kit.account_reports_partner" model="ir.ui.menu">
+        <field name="name">Reportes por contacto</field>
+    </record>
+    <record id="base_accounting_kit.account_reports_audit" model="ir.ui.menu">
+        <field name="name">Reportes de auditoría</field>
+    </record>
+    <record id="base_accounting_kit.menu_account_fx_revaluation" model="ir.ui.menu">
+        <field name="name">Revaluación de moneda</field>
+    </record>
+
     <!--
         Nota: dejamos en "Facturación" (account.menu_finance):
           - Tablero (account.menu_board_journal_1)
-          - Clientes (account.menu_finance_receivables) + Follow-up/Recurring del kit
-          - Proveedores (account.menu_finance_payables) + Bulk Payments del kit
+          - Clientes (account.menu_finance_receivables) + Reportes de seguimiento/Facturas recurrentes
+          - Proveedores (account.menu_finance_payables) + Pagos masivos
           - Configuración (account.menu_finance_configuration)
-        No se tocan: quedan tal cual bajo la tarjeta Facturación.
     -->
 
 </odoo>
