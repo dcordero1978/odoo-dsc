@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Separación de las tarjetas Facturación / Contabilidad.
+
+        Odoo Community + base_accounting_kit cuelgan todo bajo una sola tarjeta
+        ("Facturación", account.menu_finance). Aquí creamos una tarjeta nueva
+        "Contabilidad" y reasignamos a ella los menús puramente contables,
+        dejando en "Facturación" solo lo comercial (Clientes, Proveedores, Config).
+
+        Mismo motor, mismos flujos: solo cambia la organización de menús.
+        Reversible: al desinstalar dsc_base, los parent_id vuelven a su módulo origen
+        (recomendado: reinstalar/actualizar account + base_accounting_kit).
+    -->
+
+    <!-- ===== Nueva tarjeta raíz: Contabilidad ===== -->
+    <menuitem id="menu_dsc_accounting_root"
+              name="Contabilidad"
+              web_icon="account,static/description/icon.png"
+              sequence="56"/>
+
+    <!-- ===== Mover los menús contables a la nueva tarjeta ===== -->
+
+    <!-- "Contabilidad" (Transacciones, Cierre, Budgets, Management, Actions) -->
+    <record id="account.menu_finance_entries" model="ir.ui.menu">
+        <field name="parent_id" ref="menu_dsc_accounting_root"/>
+    </record>
+
+    <!-- "Revisión" (Control / Registros - conciliación) -->
+    <record id="account.account_audit_menu" model="ir.ui.menu">
+        <field name="parent_id" ref="menu_dsc_accounting_root"/>
+    </record>
+
+    <!-- "Reportes" (todos los reportes financieros, nativos + kit) -->
+    <record id="account.menu_finance_reports" model="ir.ui.menu">
+        <field name="parent_id" ref="menu_dsc_accounting_root"/>
+    </record>
+
+    <!--
+        Nota: dejamos en "Facturación" (account.menu_finance):
+          - Tablero (account.menu_board_journal_1)
+          - Clientes (account.menu_finance_receivables) + Follow-up/Recurring del kit
+          - Proveedores (account.menu_finance_payables) + Bulk Payments del kit
+          - Configuración (account.menu_finance_configuration)
+        No se tocan: quedan tal cual bajo la tarjeta Facturación.
+    -->
+
+</odoo>

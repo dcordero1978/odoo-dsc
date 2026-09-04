@@ -13,10 +13,12 @@ Sirve como punto de partida para modelos, vistas y lógica de negocio propias.
     'website': 'https://github.com/dcordero1978/odoo-dsc',
     'category': 'Customizations',
     'license': 'LGPL-3',
-    'depends': ['base'],
+    # account y base_accounting_kit: referenciamos sus menús para reorganizarlos
+    'depends': ['base', 'account', 'base_accounting_kit'],
     'data': [
         'security/ir.model.access.csv',
         'views/dsc_base_views.xml',
+        'views/accounting_menus.xml',
     ],
     'installable': True,
     'application': False,

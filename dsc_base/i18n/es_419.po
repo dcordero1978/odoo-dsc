@@ -1,0 +1,57 @@
+# Translation of DSC Base menus (español Latinoamérica).
+# Traduce los menús que base_accounting_kit / base_account_budget dejan en inglés.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: dsc_base 19.0.1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Language-Team: Español (Latinoamérica)\n"
+"Language: es_419\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# --- Nueva tarjeta creada por dsc_base ---
+msgid "Contabilidad"
+msgstr "Contabilidad"
+
+# --- Menús de base_accounting_kit (Clientes) ---
+msgid "Follow-up Reports"
+msgstr "Reportes de seguimiento"
+
+msgid "Recurring Invoices"
+msgstr "Facturas recurrentes"
+
+# --- Menús de base_accounting_kit (Proveedores) ---
+msgid "Bulk Payments"
+msgstr "Pagos masivos"
+
+# --- Menús de base_accounting_kit / base_account_budget (Contabilidad) ---
+msgid "Budgets"
+msgstr "Presupuestos"
+
+msgid "Management"
+msgstr "Gestión"
+
+msgid "Actions"
+msgstr "Acciones"
+
+# --- Menús de base_accounting_kit (Reportes) ---
+msgid "Generic Statements"
+msgstr "Estados genéricos"
+
+msgid "Daily Reports"
+msgstr "Reportes diarios"
+
+msgid "Aged Partner Balance"
+msgstr "Balance de antigüedad de saldos"
+
+msgid "Partner Reports"
+msgstr "Reportes por contacto"
+
+msgid "Audit Reports"
+msgstr "Reportes de auditoría"
+
+msgid "Currency Revaluation"
+msgstr "Revaluación de moneda"
