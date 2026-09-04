@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Botón "Traer tasa BCN" en la cabecera de la factura.
+         Visible solo cuando la moneda del documento NO es la de la compañía
+         (es decir, factura en moneda extranjera como USD). -->
+    <record id="view_move_form_bcn_boton" model="ir.ui.view">
+        <field name="name">account.move.form.bcn.boton</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_bcn_traer_tasa"
+                        type="object"
+                        string="Traer tasa BCN"
+                        icon="fa-refresh"
+                        invisible="currency_id == company_currency_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

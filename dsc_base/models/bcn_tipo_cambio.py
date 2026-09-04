@@ -206,6 +206,62 @@ class ResCurrency(models.Model):
         _logger.info("BCN: %s tasas importadas para %s/%s", creadas, mes, anio)
         return creadas
 
+    @api.model
+    def bcn_importar_dia(self, fecha=None):
+        """Importa/asegura la tasa del BCN para un día puntual.
+
+        Descarga el mes de esa fecha y guarda solo la tasa del día exacto.
+        Si el BCN no tiene ese día (fin de semana/feriado), usa la última tasa
+        disponible anterior o igual dentro del mes (fallback al día hábil previo).
+        Retorna la tasa Odoo (USD/NIO) guardada, o False si no se pudo.
+        """
+        if fecha is None:
+            fecha = date.today()
+        else:
+            fecha = fields.Date.to_date(fecha)
+
+        company = self.env.company
+        if company.currency_id.name != "NIO":
+            raise UserError(_(
+                "La moneda de la compañía debe ser NIO. Actual: %s"
+            ) % company.currency_id.name)
+
+        usd = self._bcn_get_usd()
+        tasas = self._bcn_fetch_month(fecha.year, fecha.month)
+        if not tasas:
+            raise UserError(_(
+                "El BCN no devolvió tasas para %s/%s."
+            ) % (fecha.month, fecha.year))
+
+        # tasa del día exacto o fallback al día previo disponible del mes
+        candidatas = sorted([(f, v) for f, v in tasas if f <= fecha])
+        if not candidatas:
+            raise UserError(_(
+                "El BCN no tiene tasa para el %s ni días previos del mes."
+            ) % fecha)
+        f_sel, valor_nio_usd = candidatas[-1]
+
+        rate_odoo = 1.0 / valor_nio_usd
+        Rate = self.env["res.currency.rate"]
+        existing = Rate.search([
+            ("currency_id", "=", usd.id),
+            ("name", "=", f_sel),
+            ("company_id", "in", [company.id, False]),
+        ], limit=1)
+        vals = {
+            "currency_id": usd.id,
+            "name": f_sel,
+            "rate": rate_odoo,
+            "company_id": company.id,
+            "origen_bcn": True,
+        }
+        if existing:
+            existing.write(vals)
+        else:
+            Rate.create(vals)
+        _logger.info("BCN: tasa del %s = %s NIO/USD importada.", f_sel, valor_nio_usd)
+        return rate_odoo
+
     # ------------------------------------------------------------------
     # Punto de entrada del cron (importa el mes actual)
     # ------------------------------------------------------------------
