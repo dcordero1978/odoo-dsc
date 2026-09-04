@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Formulario del wizard -->
+    <record id="view_dsc_bcn_import_wizard_form" model="ir.ui.view">
+        <field name="name">dsc.bcn.import.wizard.form</field>
+        <field name="model">dsc.bcn.import.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Importar tasas del BCN">
+                <group>
+                    <field name="anio"/>
+                    <field name="mes"/>
+                </group>
+                <p class="text-muted">
+                    Descarga las tasas oficiales del Banco Central de Nicaragua (NIO/USD)
+                    para el mes indicado y las registra en la moneda USD.
+                </p>
+                <footer>
+                    <button name="action_importar" type="object"
+                            string="Importar desde BCN" class="btn-primary"/>
+                    <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Acción para abrir el wizard -->
+    <record id="action_dsc_bcn_import_wizard" model="ir.actions.act_window">
+        <field name="name">Importar tasas del BCN</field>
+        <field name="res_model">dsc.bcn.import.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- Menú dentro de Contabilidad → Configuración -->
+    <menuitem id="menu_dsc_bcn_import"
+              name="Tasas de cambio BCN"
+              parent="account.menu_finance_configuration"
+              action="action_dsc_bcn_import_wizard"
+              sequence="90"/>
+</odoo>

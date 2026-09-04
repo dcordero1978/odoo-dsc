@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_dsc_ejemplo_user,dsc.ejemplo.user,model_dsc_ejemplo,base.group_user,1,1,1,1
+access_dsc_bcn_wizard_user,dsc.bcn.import.wizard.user,model_dsc_bcn_import_wizard,account.group_account_invoice,1,1,1,1
