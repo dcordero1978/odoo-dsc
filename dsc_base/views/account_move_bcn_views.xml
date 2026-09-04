@@ -15,6 +15,13 @@
                         icon="fa-refresh"
                         invisible="currency_id == company_currency_id"/>
             </xpath>
+
+            <!-- Ocultar el texto de tasa "1 NIO = 0,027304 USD".
+                 No es funcional para el usuario nica; la data no se modifica,
+                 solo se oculta la presentación. Se puede reactivar quitando esto. -->
+            <xpath expr="//div[@name='currency_conversion_div']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
         </field>
     </record>
 </odoo>
