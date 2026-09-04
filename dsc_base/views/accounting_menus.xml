@@ -84,6 +84,86 @@
         <field name="name">Revaluación de moneda</field>
     </record>
 
+    <!-- ===== Submenús hijos de Reportes (los reportes en sí) ===== -->
+    <!-- Estados genéricos -->
+    <record id="base_accounting_kit.account_financial_reports_profit_loss" model="ir.ui.menu">
+        <field name="name">Estado de resultados</field>
+    </record>
+    <record id="base_accounting_kit._account_financial_reports_balance_sheet" model="ir.ui.menu">
+        <field name="name">Balance general</field>
+    </record>
+    <record id="base_accounting_kit.menu_account_cash_flow_report" model="ir.ui.menu">
+        <field name="name">Estado de flujo de efectivo</field>
+    </record>
+    <!-- Reportes diarios -->
+    <record id="base_accounting_kit.account_bank_book_menu" model="ir.ui.menu">
+        <field name="name">Libro de banco</field>
+    </record>
+    <record id="base_accounting_kit.account_cash_book_menu" model="ir.ui.menu">
+        <field name="name">Libro de caja</field>
+    </record>
+    <record id="base_accounting_kit.account_day_book_menu" model="ir.ui.menu">
+        <field name="name">Libro diario</field>
+    </record>
+    <!-- Reportes por contacto -->
+    <record id="base_accounting_kit.menu_partner_ledger" model="ir.ui.menu">
+        <field name="name">Libro mayor de contactos</field>
+    </record>
+    <!-- Reportes de auditoría -->
+    <record id="base_accounting_kit.menu_general_ledger" model="ir.ui.menu">
+        <field name="name">Libro mayor general</field>
+    </record>
+    <record id="base_accounting_kit.menu_tax_report" model="ir.ui.menu">
+        <field name="name">Reporte de impuestos</field>
+    </record>
+    <record id="base_accounting_kit.menu_Balance_report" model="ir.ui.menu">
+        <field name="name">Balance de comprobación</field>
+    </record>
+    <record id="base_accounting_kit.menu_print_journal" model="ir.ui.menu">
+        <field name="name">Auditoría de diarios</field>
+    </record>
+
+    <!-- ===== Gestión (Contabilidad) ===== -->
+    <record id="base_accounting_kit.menu_action_asset_asset_report" model="ir.ui.menu">
+        <field name="name">Activos</field>
+    </record>
+
+    <!-- ===== Acciones (Contabilidad) ===== -->
+    <record id="base_accounting_kit.menu_action_account_asset_asset_form" model="ir.ui.menu">
+        <field name="name">Activos</field>
+    </record>
+    <record id="base_accounting_kit.menu_lock_dates" model="ir.ui.menu">
+        <field name="name">Fechas de bloqueo</field>
+    </record>
+
+    <!-- ===== Configuración (Facturación) ===== -->
+    <record id="base_accounting_kit.menu_finance_config_assets" model="ir.ui.menu">
+        <field name="name">Activos e ingresos</field>
+    </record>
+    <record id="base_accounting_kit.menu_account_financial_reports_tree" model="ir.ui.menu">
+        <field name="name">Reportes contables</field>
+    </record>
+    <record id="base_accounting_kit.menu_account_group" model="ir.ui.menu">
+        <field name="name">Grupos de cuentas</field>
+    </record>
+    <record id="base_accounting_kit.account_followup_menu" model="ir.ui.menu">
+        <field name="name">Niveles de seguimiento</field>
+    </record>
+    <record id="base_accounting_kit.menu_action_account_asset_asset_list_normal_purchase" model="ir.ui.menu">
+        <field name="name">Tipos de activo</field>
+    </record>
+    <record id="base_accounting_kit.account_recurring_payments_child1" model="ir.ui.menu">
+        <field name="name">Plantillas recurrentes</field>
+    </record>
+
+    <!-- ===== base_account_budget ===== -->
+    <record id="base_account_budget.menu_act_crossovered_budget_lines_view" model="ir.ui.menu">
+        <field name="name">Presupuestos</field>
+    </record>
+    <record id="base_account_budget.menu_budget_post_form" model="ir.ui.menu">
+        <field name="name">Posiciones presupuestarias</field>
+    </record>
+
     <!--
         Nota: dejamos en "Facturación" (account.menu_finance):
           - Tablero (account.menu_board_journal_1)
