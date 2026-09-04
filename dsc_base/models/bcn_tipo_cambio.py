@@ -69,6 +69,27 @@ class ResCurrency(models.Model):
     _inherit = "res.currency"
 
     # ------------------------------------------------------------------
+    # Presentación de la tasa "a la nica": 1 USD = 36.6243 NIO
+    # ------------------------------------------------------------------
+    def _compute_current_rate(self):
+        """Deja que el core calcule rate/inverse_rate y luego reescribe rate_string
+        en la lectura natural de Nicaragua: 1 <moneda> = <NIO por unidad> <NIO base>.
+
+        No altera el cálculo interno (rate sigue siendo unidades por NIO); solo el texto.
+        """
+        super()._compute_current_rate()
+        company = self.env.company
+        base = company.currency_id
+        for currency in self:
+            # Solo reescribimos para monedas distintas a la base y con tasa válida
+            if currency == base or not currency.rate:
+                continue
+            nio_por_unidad = 1.0 / currency.rate
+            currency.rate_string = '1 %s = %.4f %s' % (
+                currency.name, nio_por_unidad, base.name,
+            )
+
+    # ------------------------------------------------------------------
     # Llamada SOAP al BCN
     # ------------------------------------------------------------------
     @api.model
