@@ -22,6 +22,7 @@ Sirve como punto de partida para modelos, vistas y lógica de negocio propias.
         'data/bcn_cron.xml',
         'wizards/bcn_import_wizard_views.xml',
         'views/account_move_bcn_views.xml',
+        'report/report_trial_balance_dsc_template.xml',
     ],
     'external_dependencies': {'python': ['lxml', 'requests']},
     'installable': True,
