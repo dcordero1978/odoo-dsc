@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--
+        Traduce al español la ventana (wizard) del Trial Balance del kit.
+        Hereda la vista del wizard y fija los string de las etiquetas y botones.
+        No toca el módulo de terceros.
+    -->
+    <record id="view_trial_balance_wizard_es" model="ir.ui.view">
+        <field name="name">account.balance.report.form.es.dsc</field>
+        <field name="model">account.balance.report</field>
+        <field name="inherit_id" ref="base_accounting_kit.account_report_balance_view"/>
+        <field name="arch" type="xml">
+            <!-- Etiquetas de campos -->
+            <field name="target_move" position="attributes">
+                <attribute name="string">Asientos</attribute>
+            </field>
+            <field name="display_account" position="attributes">
+                <attribute name="string">Mostrar cuentas</attribute>
+            </field>
+            <field name="enable_filter" position="attributes">
+                <attribute name="string">Habilitar comparación</attribute>
+            </field>
+            <field name="date_from_cmp" position="attributes">
+                <attribute name="string">Fecha inicio comparación</attribute>
+            </field>
+            <field name="date_to_cmp" position="attributes">
+                <attribute name="string">Fecha fin comparación</attribute>
+            </field>
+
+            <!-- Botones -->
+            <xpath expr="//button[@name='check_report']" position="attributes">
+                <attribute name="string">Imprimir</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_print_xlsx']" position="attributes">
+                <attribute name="string">Exportar XLSX</attribute>
+            </xpath>
+            <xpath expr="//button[@special='cancel']" position="attributes">
+                <attribute name="string">Cancelar</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -21,6 +21,7 @@ Sirve como punto de partida para modelos, vistas y lógica de negocio propias.
         'views/accounting_menus.xml',
         'data/bcn_cron.xml',
         'wizards/bcn_import_wizard_views.xml',
+        'wizards/trial_balance_wizard_views.xml',
         'views/account_move_bcn_views.xml',
         'report/report_trial_balance_dsc_template.xml',
     ],
