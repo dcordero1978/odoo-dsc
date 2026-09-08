@@ -5,6 +5,11 @@
         Hereda la vista del wizard y fija los string de las etiquetas y botones.
         No toca el módulo de terceros.
     -->
+    <!-- Título de la ventana (viene del name de la acción, no del campo name) -->
+    <record id="base_accounting_kit.action_account_balance_menu" model="ir.actions.act_window">
+        <field name="name">Balanza de Comprobación</field>
+    </record>
+
     <record id="view_trial_balance_wizard_es" model="ir.ui.view">
         <field name="name">account.balance.report.form.es.dsc</field>
         <field name="model">account.balance.report</field>
