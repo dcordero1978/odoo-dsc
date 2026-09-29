@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--
+        base_accounting_kit agrega un botón "Print Check" que ejecuta el mismo
+        método (print_checks) que el botón nativo "Imprimir cheque" de Odoo.
+        Es redundante y está en inglés: lo ocultamos para dejar solo el nativo.
+    -->
+    <record id="view_account_payment_form_dsc" model="ir.ui.view">
+        <field name="name">account.payment.form.dsc.ocultar.print.check</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="base_accounting_kit.view_account_payment_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='print_checks'][@string='Print Check']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

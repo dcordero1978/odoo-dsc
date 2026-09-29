@@ -23,6 +23,7 @@ Sirve como punto de partida para modelos, vistas y lógica de negocio propias.
         'wizards/bcn_import_wizard_views.xml',
         'wizards/trial_balance_wizard_views.xml',
         'views/account_move_bcn_views.xml',
+        'views/account_payment_dsc_views.xml',
         'report/report_trial_balance_dsc_template.xml',
         'report/check_report.xml',
     ],
