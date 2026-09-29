@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Acción de reporte del cheque. El xmlID (dsc_base.action_report_check_dsc)
+         es el valor de la selección "Diseño del cheque". -->
+    <record id="action_report_check_dsc" model="ir.actions.report">
+        <field name="name">Cheque estándar (DSC)</field>
+        <field name="model">account.payment</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">dsc_base.report_check_dsc</field>
+        <field name="report_file">dsc_base.report_check_dsc</field>
+        <field name="print_report_name">'Cheque - %s' % (object.check_number or object.name)</field>
+    </record>
+
+    <!-- Plantilla del cheque -->
+    <template id="report_check_dsc">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-set="pages" t-value="o._check_get_pages()"/>
+                <t t-foreach="pages" t-as="page">
+                    <t t-call="web.basic_layout">
+                        <div class="page" style="font-family: Arial, sans-serif; font-size: 12px;">
+                            <!-- Cheque -->
+                            <div style="border: 1px solid #000; padding: 16px; margin-bottom: 12px;">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <div>
+                                        <strong t-out="page['company']"/>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <span>Cheque N°: </span>
+                                        <strong t-out="page['sequence_number'] or ''"/>
+                                        <br/>
+                                        <span>Fecha: </span>
+                                        <strong t-out="page['date'] or ''"/>
+                                    </div>
+                                </div>
+
+                                <div style="margin-top: 24px;">
+                                    <span>Páguese a la orden de: </span>
+                                    <strong t-out="page['partner_name'] or ''"/>
+                                    <span style="float: right;">
+                                        <strong t-out="page['amount']"/>
+                                    </span>
+                                </div>
+
+                                <div style="margin-top: 16px; border-bottom: 1px solid #000; padding-bottom: 4px;">
+                                    <span>La suma de: </span>
+                                    <span t-out="page['amount_in_word'] or ''"/>
+                                </div>
+
+                                <div style="margin-top: 12px;">
+                                    <span>Concepto: </span>
+                                    <span t-out="page['memo'] or ''"/>
+                                </div>
+
+                                <div style="margin-top: 40px; text-align: right;">
+                                    ____________________________<br/>
+                                    <span>Firma autorizada</span>
+                                </div>
+                            </div>
+
+                            <!-- Talón: facturas pagadas -->
+                            <div t-if="page['stub_lines']" style="font-size: 11px;">
+                                <strong>Detalle de pago</strong>
+                                <table class="table table-sm" style="width: 100%; border-collapse: collapse;">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:left;">Factura</th>
+                                            <th style="text-align:left;">Vencimiento</th>
+                                            <th style="text-align:right;">Total</th>
+                                            <th style="text-align:right;">Saldo</th>
+                                            <th style="text-align:right;">Pagado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr t-foreach="page['stub_lines']" t-as="line">
+                                            <t t-if="line.get('header')">
+                                                <td colspan="5"><strong t-out="line.get('name', '')"/></td>
+                                            </t>
+                                            <t t-else="">
+                                                <td t-out="line.get('number', '')"/>
+                                                <td t-out="line.get('due_date', '')"/>
+                                                <td style="text-align:right;" t-out="line.get('amount_total', '')"/>
+                                                <td style="text-align:right;" t-out="line.get('amount_residual', '')"/>
+                                                <td style="text-align:right;" t-out="line.get('amount_paid', '')"/>
+                                            </t>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
