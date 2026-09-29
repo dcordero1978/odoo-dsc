@@ -1,17 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <!--
-        base_accounting_kit agrega un botón "Print Check" que ejecuta el mismo
-        método (print_checks) que el botón nativo "Imprimir cheque" de Odoo.
-        Es redundante y está en inglés: lo ocultamos para dejar solo el nativo.
+        base_accounting_kit agrega botones/campos en inglés en el pago:
+        - "Print Check": redundante con el nativo "Imprimir cheque" (mismo print_checks) -> ocultar
+        - "Unmark Sent": traducir a "Desmarcar enviado"
+        - Bank Reference / Cheque Reference: traducir
     -->
     <record id="view_account_payment_form_dsc" model="ir.ui.view">
-        <field name="name">account.payment.form.dsc.ocultar.print.check</field>
+        <field name="name">account.payment.form.dsc.es</field>
         <field name="model">account.payment</field>
         <field name="inherit_id" ref="base_accounting_kit.view_account_payment_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//button[@name='print_checks'][@string='Print Check']" position="attributes">
+            <!-- Ocultar el botón redundante "Print Check" del kit.
+                 Discriminamos por el string exacto del kit. -->
+            <xpath expr="//button[@string='Print Check']" position="attributes">
                 <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <!-- Traducir "Unmark Sent" -->
+            <xpath expr="//button[@name='unmark_as_sent']" position="attributes">
+                <attribute name="string">Desmarcar enviado</attribute>
+            </xpath>
+
+            <!-- Traducir campos de referencia -->
+            <xpath expr="//field[@name='bank_reference']" position="attributes">
+                <attribute name="string">Referencia bancaria</attribute>
+            </xpath>
+            <xpath expr="//field[@name='cheque_reference']" position="attributes">
+                <attribute name="string">Referencia de cheque</attribute>
             </xpath>
         </field>
     </record>
