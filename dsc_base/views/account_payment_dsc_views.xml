@@ -15,12 +15,13 @@
         <field name="inherit_id" ref="base_accounting_kit.view_account_payment_form"/>
         <field name="priority">99</field>
         <field name="arch" type="xml">
-            <!-- Ocultar el botón redundante "Print Check" del kit.
-                 Usamos position="replace" con el xpath por string exacto. -->
-            <xpath expr="//button[@string='Print Check']" position="replace"/>
+            <!-- Ocultar el botón "Print Check" del KIT (no el del core).
+                 Se distingue por su condición invisible que incluye 'pdc'
+                 (el botón del core account_check_printing no la tiene). -->
+            <xpath expr="//button[@name='print_checks' and contains(@invisible, 'pdc')]" position="replace"/>
 
-            <!-- Traducir "Unmark Sent" -->
-            <xpath expr="//button[@name='unmark_as_sent']" position="attributes">
+            <!-- Traducir "Unmark Sent" del kit (mismo discriminador 'pdc') -->
+            <xpath expr="//button[@name='unmark_as_sent' and contains(@invisible, 'pdc')]" position="attributes">
                 <attribute name="string">Desmarcar enviado</attribute>
             </xpath>
 
