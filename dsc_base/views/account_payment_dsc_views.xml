@@ -5,17 +5,19 @@
         - "Print Check": redundante con el nativo "Imprimir cheque" (mismo print_checks) -> ocultar
         - "Unmark Sent": traducir a "Desmarcar enviado"
         - Bank Reference / Cheque Reference: traducir
+
+        priority alta (99) para que esta herencia se aplique DESPUÉS de la del kit,
+        cuando el botón "Print Check" ya existe en el árbol de la vista.
     -->
     <record id="view_account_payment_form_dsc" model="ir.ui.view">
         <field name="name">account.payment.form.dsc.es</field>
         <field name="model">account.payment</field>
         <field name="inherit_id" ref="base_accounting_kit.view_account_payment_form"/>
+        <field name="priority">99</field>
         <field name="arch" type="xml">
             <!-- Ocultar el botón redundante "Print Check" del kit.
-                 Discriminamos por el string exacto del kit. -->
-            <xpath expr="//button[@string='Print Check']" position="attributes">
-                <attribute name="invisible">1</attribute>
-            </xpath>
+                 Usamos position="replace" con el xpath por string exacto. -->
+            <xpath expr="//button[@string='Print Check']" position="replace"/>
 
             <!-- Traducir "Unmark Sent" -->
             <xpath expr="//button[@name='unmark_as_sent']" position="attributes">
