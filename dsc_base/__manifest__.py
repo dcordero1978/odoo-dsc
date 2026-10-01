@@ -14,7 +14,8 @@ Sirve como punto de partida para modelos, vistas y lógica de negocio propias.
     'category': 'Customizations',
     'license': 'LGPL-3',
     # account y base_accounting_kit: referenciamos sus menús para reorganizarlos
-    'depends': ['base', 'account', 'base_accounting_kit'],
+    'depends': ['base', 'account', 'base_accounting_kit',
+                'account_statement_import_sheet_file'],
     'data': [
         'security/ir.model.access.csv',
         'views/dsc_base_views.xml',
