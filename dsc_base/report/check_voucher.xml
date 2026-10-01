@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+    <!-- Formato de papel carta con márgenes pequeños y SIN espacio de cabecera/pie -->
+    <record id="paperformat_check_voucher_dsc" model="report.paperformat">
+        <field name="name">Comprobante Cheque Carta DSC</field>
+        <field name="format">Letter</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">8</field>
+        <field name="margin_bottom">8</field>
+        <field name="margin_left">8</field>
+        <field name="margin_right">8</field>
+        <field name="header_spacing">0</field>
+        <field name="header_line" eval="False"/>
+        <field name="dpi">90</field>
+    </record>
+
     <!-- Reporte: Comprobante de Cheque (carta) -->
     <record id="action_report_check_voucher_dsc" model="ir.actions.report">
         <field name="name">Comprobante de Cheque</field>
@@ -8,6 +22,7 @@
         <field name="report_name">dsc_base.report_check_voucher_dsc</field>
         <field name="report_file">dsc_base.report_check_voucher_dsc</field>
         <field name="print_report_name">'Comprobante Cheque - %s' % (object.check_number or object.name)</field>
+        <field name="paperformat_id" ref="paperformat_check_voucher_dsc"/>
         <field name="binding_model_id" eval="False"/>
     </record>
 
@@ -44,7 +59,7 @@
                             </tr>
                             <tr>
                                 <td style="border:none; vertical-align:top;">La suma de</td>
-                                <td style="border:none; vertical-align:top; height:90px;"><strong t-out="o.check_amount_in_words or ''"/></td>
+                                <td style="border:none; vertical-align:top; height:180px;"><strong t-out="o.check_amount_in_words or ''"/></td>
                             </tr>
                         </table>
 
