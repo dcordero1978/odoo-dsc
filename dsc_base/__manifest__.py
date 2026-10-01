@@ -27,6 +27,7 @@ Sirve como punto de partida para modelos, vistas y lógica de negocio propias.
         'views/account_payment_dsc_views.xml',
         'report/report_trial_balance_dsc_template.xml',
         'report/check_report.xml',
+        'report/check_voucher.xml',
     ],
     'external_dependencies': {'python': ['lxml', 'requests']},
     'installable': True,

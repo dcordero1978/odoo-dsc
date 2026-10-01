@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Reporte: Comprobante de Cheque (carta) -->
+    <record id="action_report_check_voucher_dsc" model="ir.actions.report">
+        <field name="name">Comprobante de Cheque</field>
+        <field name="model">account.payment</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">dsc_base.report_check_voucher_dsc</field>
+        <field name="report_file">dsc_base.report_check_voucher_dsc</field>
+        <field name="print_report_name">'Comprobante Cheque - %s' % (object.check_number or object.name)</field>
+        <field name="binding_model_id" eval="False"/>
+    </record>
+
+    <template id="report_check_voucher_dsc">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page" style="font-size: 11px;">
+                        <div class="text-center">
+                            <h4 style="margin-bottom: 2px;" t-out="o.company_id.name"/>
+                            <strong>COMPROBANTE DE CHEQUE</strong>
+                        </div>
+
+                        <!-- Línea cheque: No, fecha, por, monto -->
+                        <table class="table table-sm" style="border:1px solid #000; margin-top:8px;">
+                            <tr>
+                                <td style="border:none;">Cheque No. <strong t-out="o.check_number or ''"/></td>
+                                <td style="border:none;">del <strong t-out="o.date" t-options="{'widget': 'date'}"/></td>
+                                <td style="border:none; text-align:right;">
+                                    Por
+                                    <strong>***
+                                        <span t-out="o.amount" t-options="{'widget': 'float', 'precision': 2}"/>***
+                                        <span t-out="o.currency_id.name"/>
+                                    </strong>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- Cuerpo del cheque -->
+                        <table class="table table-sm" style="border:1px solid #000;">
+                            <tr>
+                                <td style="border:none; width:20%;">Páguese a la orden de</td>
+                                <td style="border:none;"><strong t-out="o.partner_id.name or ''"/></td>
+                            </tr>
+                            <tr>
+                                <td style="border:none;">La suma de</td>
+                                <td style="border:none;"><strong t-out="o.check_amount_in_words or ''"/></td>
+                            </tr>
+                        </table>
+
+                        <!-- Concepto -->
+                        <table class="table table-sm" style="border:1px solid #000;">
+                            <tr>
+                                <td style="border:none;">
+                                    En concepto de:
+                                    <span t-out="o.memo or ''"/>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- Factor cambiario / Cheque No -->
+                        <table class="table table-sm" style="margin-top:4px;">
+                            <tr>
+                                <td style="border:none; text-align:right;">
+                                    Factor cambiario:
+                                    <strong t-out="round(1.0 / o.currency_id.rate, 4) if o.currency_id.rate else 1"/>
+                                    &amp;nbsp;&amp;nbsp;&amp;nbsp; Cheque No.
+                                    <strong t-out="o.check_number or ''"/>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- Tabla del asiento contable -->
+                        <table class="table table-sm table-bordered" style="margin-top:4px;">
+                            <thead>
+                                <tr style="background:#eee;">
+                                    <th>Cuenta</th>
+                                    <th>Descripción</th>
+                                    <th>Centro</th>
+                                    <th class="text-end">Débito</th>
+                                    <th class="text-end">Crédito</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="tot_debe" t-value="0"/>
+                                <t t-set="tot_haber" t-value="0"/>
+                                <tr t-foreach="o._comprobante_cheque_lineas()" t-as="l">
+                                    <td t-out="l['cuenta']"/>
+                                    <td><span t-out="l['cuenta_nombre']"/> <span t-if="l['descripcion']" t-out="'- ' + l['descripcion']"/></td>
+                                    <td t-out="l['centro']"/>
+                                    <td class="text-end">
+                                        <span t-out="l['debito']" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
+                                    </td>
+                                    <td class="text-end">
+                                        <span t-out="l['credito']" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
+                                    </td>
+                                    <t t-set="tot_debe" t-value="tot_debe + l['debito']"/>
+                                    <t t-set="tot_haber" t-value="tot_haber + l['credito']"/>
+                                </tr>
+                                <tr style="font-weight:bold;">
+                                    <td colspan="3" class="text-end">TOTALES</td>
+                                    <td class="text-end">
+                                        <span t-out="tot_debe" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
+                                    </td>
+                                    <td class="text-end">
+                                        <span t-out="tot_haber" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Firmas -->
+                        <table class="table table-sm table-bordered" style="margin-top:16px;">
+                            <tr>
+                                <td style="height:50px;">Elaborado por:</td>
+                                <td>Revisado por:</td>
+                                <td>Autorizado por:</td>
+                            </tr>
+                            <tr>
+                                <td>Nombre e identificación</td>
+                                <td/>
+                                <td>Recibido por:</td>
+                            </tr>
+                        </table>
+
+                        <div class="text-center" style="margin-top:8px;">
+                            <strong>Comprobante va Asentado</strong>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

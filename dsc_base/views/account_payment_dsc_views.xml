@@ -20,6 +20,15 @@
                  (el botón del core account_check_printing no la tiene). -->
             <xpath expr="//button[@name='print_checks' and contains(@invisible, 'pdc')]" position="replace"/>
 
+            <!-- Botón nuevo: Comprobante de Cheque (voucher carta estilo nica).
+                 Visible para pagos de salida con método cheque. -->
+            <xpath expr="//button[@name='action_post']" position="before">
+                <button name="action_imprimir_comprobante_cheque"
+                        type="object"
+                        string="Comprobante de Cheque"
+                        invisible="payment_method_code not in ['check_printing','pdc'] or payment_type != 'outbound'"/>
+            </xpath>
+
             <!-- Traducir "Unmark Sent" del kit (mismo discriminador 'pdc') -->
             <xpath expr="//button[@name='unmark_as_sent' and contains(@invisible, 'pdc')]" position="attributes">
                 <attribute name="string">Desmarcar enviado</attribute>
