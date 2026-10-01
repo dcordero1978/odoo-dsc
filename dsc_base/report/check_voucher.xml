@@ -14,7 +14,7 @@
     <template id="report_check_voucher_dsc">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
-                <t t-call="web.external_layout">
+                <t t-call="web.basic_layout">
                     <div class="page" style="font-size: 11px;">
                         <div class="text-center">
                             <h4 style="margin-bottom: 2px;" t-out="o.company_id.name"/>
@@ -22,7 +22,7 @@
                         </div>
 
                         <!-- Línea cheque: No, fecha, por, monto -->
-                        <table class="table table-sm" style="border:1px solid #000; margin-top:8px;">
+                        <table class="table table-sm" style="border:1px solid #000; margin-top:6px; margin-bottom:0;">
                             <tr>
                                 <td style="border:none;">Cheque No. <strong t-out="o.check_number or ''"/></td>
                                 <td style="border:none;">del <strong t-out="o.date" t-options="{'widget': 'date'}"/></td>
@@ -36,15 +36,15 @@
                             </tr>
                         </table>
 
-                        <!-- Cuerpo del cheque -->
-                        <table class="table table-sm" style="border:1px solid #000;">
+                        <!-- Cuerpo del cheque (recuadro alto, estilo talón) -->
+                        <table class="table table-sm" style="border:1px solid #000; margin-top:2px;">
                             <tr>
-                                <td style="border:none; width:20%;">Páguese a la orden de</td>
-                                <td style="border:none;"><strong t-out="o.partner_id.name or ''"/></td>
+                                <td style="border:none; width:20%; vertical-align:top;">Páguese a la orden de</td>
+                                <td style="border:none; vertical-align:top;"><strong t-out="o.partner_id.name or ''"/></td>
                             </tr>
                             <tr>
-                                <td style="border:none;">La suma de</td>
-                                <td style="border:none;"><strong t-out="o.check_amount_in_words or ''"/></td>
+                                <td style="border:none; vertical-align:top;">La suma de</td>
+                                <td style="border:none; vertical-align:top; height:90px;"><strong t-out="o.check_amount_in_words or ''"/></td>
                             </tr>
                         </table>
 
